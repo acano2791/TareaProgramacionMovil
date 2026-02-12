@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View ,Image } from 'react-native';
 import CustomInput from './src/components/CustomInput';
 import CustomButton from "./src/components/CustomButton";
 import { useState } from 'react';
@@ -9,9 +9,12 @@ export default function App() {
 const [nombre, setNombre] = useState("");
 const [edad, setEdad] = useState("");
 
-//Declaraciones Ejercicio 1
+//Declaraciones Ejercicio 2
 const [contador, setContador] = useState(0);
 const esPar = contador % 2 === 0;
+
+//Declaraciones Ejercicio 3
+const [mostrarDetalles, setMostrarDetalles] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -25,17 +28,19 @@ const esPar = contador % 2 === 0;
               onChange={setNombre} 
               value={nombre} 
               typeInput={'text'}              
-              />
-      <CustomInput 
+       />
+       <CustomInput 
               placeholder={'Ingrese su edad'} 
               onChange={setEdad} 
               value={edad} 
               typeInput={'numeric'}              
-              />
+       />
       
         <Text style={styles.text}> 
-          Hola {nombre}. Tienes {edad} años.
-        </Text>
+         Hola {nombre}. Tienes {edad} años.
+      </Text>
+        
+        
       </View>
  
       <View style={styles.container2}>
@@ -70,12 +75,39 @@ const esPar = contador % 2 === 0;
         </View>
       </View>
 
-      
       <View style={styles.container3}>
       <Text style={styles.text}>
-        Ejercicio #3 - Toggle de visibilidad</Text>
-      </View>
+        Ejercicio #3 - Toggle de visibilidad
+      </Text>
 
+      {/* Botón con texto usando ternario */}
+      <CustomButton
+      title={mostrarDetalles ? "Ocultar detalles" : "Mostrar detalles"}
+      onClick={() => setMostrarDetalles(!mostrarDetalles)}
+      variant="primary"
+      />
+
+      {/* Contenido condicionado */}
+      {mostrarDetalles ? (
+      <View style={styles.detallesBox}>
+      <Text style={styles.detallesText}>
+        Detalles del usuario...
+      </Text>
+
+      <Image
+        source={{
+          uri: "https://reactnative.dev/img/tiny_logo.png",
+        }}
+        style={styles.image}
+        />
+        </View>
+        ) : (
+        <Text style={styles.detallesOcultos}>
+        Detalles ocultos
+      </Text>
+     )}
+
+    </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -116,6 +148,7 @@ text:{   /* Estilo de texto */
         fontWeight:  "400" /* peso medio */
     },
 
+//Estilos Ejercicio   2
 counterValue: {
     color: "black",
     fontSize: 42,
@@ -142,4 +175,28 @@ counterValue: {
     marginTop: 6,
   },
 
+  //Estilos Ejercicio 3
+  
+  detallesBox: {
+  alignItems: "center",
+  gap: 8,
+  marginTop: 8,
+  },
+
+  detallesText: {
+  color: "white",
+  fontSize: 16,
+  },
+
+  detallesOcultos: {
+  color: "#FFD54F",
+  fontSize: 16,
+  marginTop: 8,
+  },
+
+  image: {
+  width: 80,
+  height: 80,
+  marginTop: 6,
+  }
 });
